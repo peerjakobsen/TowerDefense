@@ -10,11 +10,13 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local LogService = require(ReplicatedStorage.Shared.LogService)
 local MapConstants = require(ReplicatedStorage.Shared.constants.MapConstants)
 
+local Tower = require(script.Parent.Parent.entities.Tower)
+
 local TowerService = {}
 
 -- Private state
 local serviceInitialized = false
-local activeTowers: {[string]: any} = {} -- Will be typed properly when Tower module is created
+local activeTowers: {[string]: Tower.Tower} = {}
 local towerIdCounter = 0
 local lastUpdateTime = 0
 local updateInterval = 0.1 -- Update towers every 0.1 seconds (10 FPS)
@@ -47,10 +49,10 @@ local function getActiveTowerCount(): number
 end
 
 -- Private function to update all active towers
-local function updateAllTowers()
+local function updateAllTowers(deltaTime: number)
 	for towerId, tower in pairs(activeTowers) do
-		-- Tower update logic will be implemented when Tower module is created
-		-- This will handle enemy detection, targeting, and firing
+		-- Each tower handles its own update logic including enemy detection and targeting
+		tower:Update(deltaTime)
 	end
 end
 
@@ -80,10 +82,10 @@ function TowerService.Initialize()
 	end
 	
 	-- Set up tower update loop using RunService
-	heartbeatConnection = RunService.Heartbeat:Connect(function()
+	heartbeatConnection = RunService.Heartbeat:Connect(function(deltaTime)
 		local currentTime = tick()
 		if currentTime - lastUpdateTime >= updateInterval then
-			updateAllTowers()
+			updateAllTowers(deltaTime)
 			lastUpdateTime = currentTime
 		end
 	end)
@@ -118,8 +120,11 @@ function TowerService.IsValidPlacement(position: Vector3): boolean
 	
 	-- Check for collisions with existing towers
 	for _, tower in pairs(activeTowers) do
-		-- Will implement collision checking when Tower module is created
-		-- For now, assume no collision if tower tracking is empty
+		local distance = (tower:GetPosition() - position).Magnitude
+		-- If towers are too close together (within 3 studs), reject placement
+		if distance < 3.0 then
+			return false
+		end
 	end
 	
 	-- TODO: Add path blocking validation when pathfinding is integrated
@@ -160,46 +165,18 @@ function TowerService.CreateTower(position: Vector3): string?
 		return nil
 	end
 	
-	-- Generate unique tower ID
-	local towerId = generateTowerId()
+	-- Create new Tower entity instance
+	local tower = Tower.new(placementInfo.adjustedPosition)
+	tower:Initialize() -- Start the tower's update loop
 	
-	-- Create tower visual representation (basic model)
-	local towerFolder = workspace:FindFirstChild("Towers")
-	if not towerFolder then
-		towerFolder = Instance.new("Folder")
-		towerFolder.Name = "Towers"
-		towerFolder.Parent = workspace
-	end
-	
-	local towerPart = Instance.new("Part")
-	towerPart.Name = "Tower_" .. towerId
-	towerPart.Size = TOWER_SIZE
-	towerPart.Position = placementInfo.adjustedPosition
-	towerPart.Color = Color3.fromRGB(100, 100, 100) -- Gray tower
-	towerPart.Material = Enum.Material.Metal
-	towerPart.Anchored = true
-	towerPart.CanCollide = true
-	towerPart.Parent = towerFolder
-	
-	-- Create tower data structure (placeholder for now)
-	local towerData = {
-		id = towerId,
-		position = placementInfo.adjustedPosition,
-		part = towerPart,
-		damage = TOWER_DAMAGE,
-		range = TOWER_RANGE,
-		fireRate = TOWER_FIRE_RATE,
-		lastFireTime = 0,
-		currentTarget = nil,
-		createdTime = tick()
-	}
+	local towerId = tower:GetId()
 	
 	-- Store in active towers
-	activeTowers[towerId] = towerData
+	activeTowers[towerId] = tower
 	
 	-- Fire placement event
 	if towerPlacedEvent then
-		towerPlacedEvent:Fire(towerId, towerData)
+		towerPlacedEvent:Fire(towerId, tower)
 	end
 	
 	LogService.info("TowerService: Tower created successfully", {
@@ -225,10 +202,8 @@ function TowerService.DestroyTower(towerId: string): boolean
 		return false
 	end
 	
-	-- Clean up tower visual
-	if tower.part then
-		tower.part:Destroy()
-	end
+	-- Clean up tower entity (handles visual cleanup internally)
+	tower:Destroy()
 	
 	-- Remove from active towers
 	activeTowers[towerId] = nil
@@ -278,7 +253,7 @@ function TowerService.Shutdown()
 	
 	-- Clean up all active towers
 	for towerId, tower in pairs(activeTowers) do
-		-- Tower cleanup will be implemented when Tower module is created
+		tower:Destroy()
 	end
 	activeTowers = {}
 	

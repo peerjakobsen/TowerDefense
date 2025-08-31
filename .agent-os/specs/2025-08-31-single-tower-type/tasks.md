@@ -22,14 +22,14 @@ Create the core singleton service that manages all tower operations and coordina
 ### Task 2: Tower Entity Implementation
 Develop the individual tower behavior system including targeting, firing, and state management.
 
-- [ ] 2.1 Create Tower ModuleScript in `src/server/entities/`
-- [ ] 2.2 Implement tower state management (idle, targeting, firing)
-- [ ] 2.3 Add enemy detection system using magnitude-based range checking
-- [ ] 2.4 Implement closest-enemy targeting algorithm
-- [ ] 2.5 Create firing rate management with cooldown tracking
-- [ ] 2.6 Add RunService.Heartbeat connection for tower updates (0.1s intervals)
-- [ ] 2.7 Create manual test scenarios for tower detection and targeting
-- [ ] 2.8 Integrate with existing EnemyService for enemy position data
+- [x] 2.1 Create Tower ModuleScript in `src/server/entities/`
+- [x] 2.2 Implement tower state management (idle, targeting, firing)
+- [x] 2.3 Add enemy detection system using magnitude-based range checking
+- [x] 2.4 Implement closest-enemy targeting algorithm
+- [x] 2.5 Create firing rate management with cooldown tracking
+- [x] 2.6 Add RunService.Heartbeat connection for tower updates (0.1s intervals)
+- [x] 2.7 Create manual test scenarios for tower detection and targeting
+- [x] 2.8 Integrate with existing EnemyService for enemy position data
 
 ### Task 3: Projectile System
 Build the projectile creation, movement, and impact system for tower combat.
