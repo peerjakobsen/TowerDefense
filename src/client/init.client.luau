@@ -9,3 +9,4 @@ local LogService = require(ReplicatedStorage:WaitForChild("Shared"):WaitForChild
 LogService.info("Client script started", {
 	player = Players.LocalPlayer and Players.LocalPlayer.Name or "Unknown",
 })
+
