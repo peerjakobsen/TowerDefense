@@ -3,7 +3,7 @@
 These are the tasks to be completed for the spec detailed in @.agent-os/specs/2025-08-31-linear-enemy-movement/spec.md
 
 > Created: 2025-08-31
-> Status: In Progress - Tasks 1-2 Complete
+> Status: In Progress - Tasks 1-4 Complete
 
 ## Tasks
 
@@ -46,18 +46,18 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
 - [x] 3.7 Test enemy Part creation and visual representation in Studio workspace
 - [x] 3.8 Verify Part cleanup works correctly when enemies are removed
 
-### 4. EnemyService Core System
+### 4. EnemyService Core System ✅ COMPLETED
 
 **Objective**: Develop the singleton EnemyService that manages the enemy lifecycle, spawning, updates, and integration with the game loop.
 
-- [ ] 4.1 Create `src/server/services/EnemyService.luau` with singleton service pattern
-- [ ] 4.2 Implement enemy spawning system using MapConstants for spawn/goal positions
-- [ ] 4.3 Add active enemy tracking with proper data structures (ActiveEnemies table)
-- [ ] 4.4 Create RunService.Heartbeat connection for 60 FPS enemy position updates
-- [ ] 4.5 Implement enemy removal system for destroyed or completed enemies
-- [ ] 4.6 Add enemy count limits and spawn timing controls from EnemyConstants
-- [ ] 4.7 Create public API methods (SpawnEnemy, GetActiveEnemies, RemoveEnemy)
-- [ ] 4.8 Test EnemyService initialization and basic enemy spawning in Studio
+- [x] 4.1 Create `src/server/services/EnemyService.luau` with singleton service pattern
+- [x] 4.2 Implement enemy spawning system using MapConstants for spawn/goal positions
+- [x] 4.3 Add active enemy tracking with proper data structures (ActiveEnemies table)
+- [x] 4.4 Create RunService.Heartbeat connection for 60 FPS enemy position updates
+- [x] 4.5 Implement enemy removal system for destroyed or completed enemies
+- [x] 4.6 Add enemy count limits and spawn timing controls from EnemyConstants
+- [x] 4.7 Create public API methods (SpawnEnemy, GetActiveEnemies, RemoveEnemy)
+- [x] 4.8 Test EnemyService initialization and basic enemy spawning in Studio
 
 ### 5. Linear Movement Implementation
 
