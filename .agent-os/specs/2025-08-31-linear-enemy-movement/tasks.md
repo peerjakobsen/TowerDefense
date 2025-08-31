@@ -3,7 +3,7 @@
 These are the tasks to be completed for the spec detailed in @.agent-os/specs/2025-08-31-linear-enemy-movement/spec.md
 
 > Created: 2025-08-31
-> Status: In Progress - Tasks 1-4 Complete
+> Status: In Progress - Tasks 1-5 Complete
 
 ## Tasks
 
@@ -59,18 +59,18 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
 - [x] 4.7 Create public API methods (SpawnEnemy, GetActiveEnemies, RemoveEnemy)
 - [x] 4.8 Test EnemyService initialization and basic enemy spawning in Studio
 
-### 5. Linear Movement Implementation
+### 5. Linear Movement Implementation ✅ COMPLETED
 
 **Objective**: Implement the core linear interpolation movement system that moves enemies from spawn to goal in a straight line for Phase 1.
 
-- [ ] 5.1 Calculate normalized direction vector from spawn to goal position in Enemy.new()
-- [ ] 5.2 Implement frame-based movement using direction × speed × deltaTime formula
-- [ ] 5.3 Add boundary checking to prevent enemies from overshooting the goal
-- [ ] 5.4 Implement smooth movement updates synchronized with RunService.Heartbeat
-- [ ] 5.5 Add movement state transitions (SPAWNING → MOVING → REACHED_TARGET)
-- [ ] 5.6 Test linear movement accuracy using MapConstants spawn/goal positions
-- [ ] 5.7 Verify movement speed is consistent and visually smooth in Studio
-- [ ] 5.8 Confirm enemies properly detect arrival at goal position
+- [x] 5.1 Calculate normalized direction vector from spawn to goal position in Enemy.new()
+- [x] 5.2 Implement frame-based movement using direction × speed × deltaTime formula
+- [x] 5.3 Add boundary checking to prevent enemies from overshooting the goal
+- [x] 5.4 Implement smooth movement updates synchronized with RunService.Heartbeat
+- [x] 5.5 Add movement state transitions (SPAWNING → MOVING → REACHED_TARGET)
+- [x] 5.6 Test linear movement accuracy using MapConstants spawn/goal positions
+- [x] 5.7 Verify movement speed is consistent and visually smooth in Studio
+- [x] 5.8 Confirm enemies properly detect arrival at goal position
 
 ### 6. Logging and Debug Integration
 
