@@ -7,12 +7,42 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local CollectionService = game:GetService("CollectionService")
-local RunService = game:GetService("RunService")
 
 local EnemyConstants = require(ReplicatedStorage.Shared.constants.EnemyConstants)
 local LogService = require(ReplicatedStorage.Shared.LogService)
 
 export type EnemyState = "Spawning" | "Moving" | "ReachedTarget" | "Destroyed"
+
+export type Enemy = {
+	id: string,
+	spawnPosition: Vector3,
+	targetPosition: Vector3,
+	currentPosition: Vector3,
+	maxHealth: number,
+	health: number,
+	speed: number,
+	direction: Vector3,
+	distanceToTarget: number,
+	state: EnemyState,
+	part: Part?,
+	
+	TakeDamage: (self: Enemy, damage: number) -> boolean,
+	GetHealth: (self: Enemy) -> number,
+	GetMaxHealth: (self: Enemy) -> number,
+	IsAlive: (self: Enemy) -> boolean,
+	Update: (self: Enemy, deltaTime: number) -> boolean,
+	GetPosition: (self: Enemy) -> Vector3,
+	GetState: (self: Enemy) -> EnemyState,
+	GetSpeed: (self: Enemy) -> number,
+	GetDistanceToTarget: (self: Enemy) -> number,
+	GetDirection: (self: Enemy) -> Vector3,
+	GetId: (self: Enemy) -> string,
+	Destroy: (self: Enemy) -> (),
+	_SetState: (self: Enemy, newState: EnemyState) -> (),
+	_CreatePart: (self: Enemy) -> (),
+	_UpdatePartPosition: (self: Enemy) -> (),
+	_DestroyPart: (self: Enemy) -> (),
+}
 
 local Enemy = {}
 Enemy.__index = Enemy
@@ -30,8 +60,8 @@ local function getOrCreateEnemiesFolder(): Folder
 end
 
 -- Constructor: Create a new enemy instance
-function Enemy.new(spawnPosition: Vector3, targetPosition: Vector3)
-	local self = setmetatable({}, Enemy)
+function Enemy.new(spawnPosition: Vector3, targetPosition: Vector3): Enemy
+	local self = setmetatable({}, Enemy) :: any
 
 	-- Generate unique ID for this enemy
 	self.id = HttpService:GenerateGUID(false)
@@ -70,6 +100,7 @@ end
 
 -- Health management methods
 function Enemy:TakeDamage(damage: number): boolean
+  local self = self :: Enemy
   if self.state == EnemyConstants.STATES.DESTROYED then
     return false -- Already destroyed, ignore damage
   end
@@ -85,7 +116,7 @@ function Enemy:TakeDamage(damage: number): boolean
   
   -- Check for death
   if self.health <= 0 then
-    self:_SetState(EnemyConstants.STATES.DESTROYED)
+    self:_SetState(EnemyConstants.STATES.DESTROYED :: EnemyState)
     LogService.info("Enemy destroyed by damage", {
       id = self.id,
     })
@@ -109,13 +140,14 @@ end
 
 -- Movement and update logic
 function Enemy:Update(deltaTime: number): boolean
+  local self = self :: Enemy
   if not self:IsAlive() then
     return false -- Dead enemies don't move
   end
   
   -- Handle state transitions
   if self.state == EnemyConstants.STATES.SPAWNING then
-    self:_SetState(EnemyConstants.STATES.MOVING)
+    self:_SetState(EnemyConstants.STATES.MOVING :: EnemyState)
   end
   
   -- Only move if in MOVING state
@@ -135,7 +167,7 @@ function Enemy:Update(deltaTime: number): boolean
     -- Snap to exact target position
     self.currentPosition = self.targetPosition
     self.distanceToTarget = 0
-    self:_SetState(EnemyConstants.STATES.REACHED_TARGET)
+    self:_SetState(EnemyConstants.STATES.REACHED_TARGET :: EnemyState)
     
     -- Synchronize Part position to exact target
     self:_UpdatePartPosition()
@@ -235,18 +267,21 @@ end
 
 function Enemy:_DestroyPart()
 	if self.part and self.part.Parent then
+		local part = self.part
+		
 		-- Remove CollectionService tag
-		CollectionService:RemoveTag(self.part, "Enemy")
+		CollectionService:RemoveTag(part, "Enemy")
 		
 		LogService.info("Enemy Part destroyed", {
 			id = self.id,
-			partName = self.part.Name,
-			finalPosition = self.part.Position,
+			partName = part.Name,
+			finalPosition = part.Position,
 		})
 		
-		-- Destroy the Part
-		self.part:Destroy()
-		self.part = nil
+		-- Clear reference first, then destroy
+		local selfAny = self :: any
+		selfAny.part = nil
+		part:Destroy()
 	end
 end
 
