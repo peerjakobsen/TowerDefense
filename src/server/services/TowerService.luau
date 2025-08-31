@@ -18,6 +18,7 @@ local activeTowers: {[string]: any} = {} -- Will be typed properly when Tower mo
 local towerIdCounter = 0
 local lastUpdateTime = 0
 local updateInterval = 0.1 -- Update towers every 0.1 seconds (10 FPS)
+local heartbeatConnection: RBXScriptConnection?
 
 -- Events for game state changes and tower lifecycle
 local towerPlacedEvent: BindableEvent?
@@ -45,6 +46,14 @@ local function getActiveTowerCount(): number
 	return count
 end
 
+-- Private function to update all active towers
+local function updateAllTowers()
+	for towerId, tower in pairs(activeTowers) do
+		-- Tower update logic will be implemented when Tower module is created
+		-- This will handle enemy detection, targeting, and firing
+	end
+end
+
 -- Initialize the tower service
 function TowerService.Initialize()
 	if serviceInitialized then
@@ -56,13 +65,19 @@ function TowerService.Initialize()
 	
 	-- Initialize events
 	towerPlacedEvent = Instance.new("BindableEvent")
-	towerPlacedEvent.Name = "TowerPlaced"
+	if towerPlacedEvent then
+		towerPlacedEvent.Name = "TowerPlaced"
+	end
 	
 	towerDestroyedEvent = Instance.new("BindableEvent")
-	towerDestroyedEvent.Name = "TowerDestroyed"
+	if towerDestroyedEvent then
+		towerDestroyedEvent.Name = "TowerDestroyed"
+	end
 	
 	towerTargetChangedEvent = Instance.new("BindableEvent")
-	towerTargetChangedEvent.Name = "TowerTargetChanged"
+	if towerTargetChangedEvent then
+		towerTargetChangedEvent.Name = "TowerTargetChanged"
+	end
 	
 	-- Set up tower update loop using RunService
 	heartbeatConnection = RunService.Heartbeat:Connect(function()
@@ -80,14 +95,6 @@ function TowerService.Initialize()
 		towerRange = TOWER_RANGE,
 		fireRate = TOWER_FIRE_RATE
 	})
-end
-
--- Private function to update all active towers
-local function updateAllTowers()
-	for towerId, tower in pairs(activeTowers) do
-		-- Tower update logic will be implemented when Tower module is created
-		-- This will handle enemy detection, targeting, and firing
-	end
 end
 
 -- Tower placement validation methods
@@ -426,7 +433,7 @@ function TowerService.TestStatistics()
 	LogService.info("Statistics with active towers", stats)
 	
 	-- Test GetAllTowers
-	local allTowers = TowerService.GetAllTowers()
+	local _allTowers = TowerService.GetAllTowers()
 	LogService.info("All towers count", {
 		expected = #testTowers,
 		actual = getActiveTowerCount()
