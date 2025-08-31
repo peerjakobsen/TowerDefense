@@ -1,0 +1,3 @@
+# Spec Summary (Lite)
+
+Implement a development logging system that allows Roblox Studio games to send logs to a local Python server with separate server and client log files, enabling external debugging tools to read structured logs directly from disk. This system includes multiplayer client identification, eliminates manual console output copying, and provides isolated server/client logging for AI-assisted debugging of tower defense systems, operating only in Studio environment for security.
