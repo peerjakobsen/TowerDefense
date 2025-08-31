@@ -6,7 +6,7 @@
 
 ### Features
 - [x] Create rectangular map with spawn/goal points - Basic map layout with clearly defined start and end positions `S`
-- [ ] Implement linear enemy movement - Enemy moves in straight line from spawn to goal `S`
+- [x] Implement linear enemy movement - Enemy moves in straight line from spawn to goal `S`
 - [ ] Build single tower type - Tower detects enemies in range and shoots projectiles `M`
 - [ ] Basic health/score UI - Simple interface showing player health and score `S`
 - [ ] Enemy destruction system - Enemies take damage and are removed when health reaches zero `S`
