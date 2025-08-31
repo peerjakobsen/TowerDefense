@@ -3,35 +3,35 @@
 These are the tasks to be completed for the spec detailed in @.agent-os/specs/2025-08-31-linear-enemy-movement/spec.md
 
 > Created: 2025-08-31
-> Status: Ready for Implementation
+> Status: In Progress - Tasks 1-2 Complete
 
 ## Tasks
 
-### 1. Enemy Constants and Configuration
+### 1. Enemy Constants and Configuration ✅ COMPLETED
 
 **Objective**: Create centralized enemy configuration constants that define enemy characteristics and behavior parameters for Phase 1 linear movement.
 
-- [ ] 1.1 Create `src/shared/constants/EnemyConstants.luau` with enemy health, speed, and timing constants
-- [ ] 1.2 Add enemy visual properties (size, color, material) for basic enemy representation
-- [ ] 1.3 Define enemy states enum (SPAWNING, MOVING, REACHED_TARGET, DESTROYED) 
-- [ ] 1.4 Configure spawn timing and enemy limits for Phase 1 (5-10 concurrent enemies)
-- [ ] 1.5 Add distance threshold constant for goal detection and cleanup
-- [ ] 1.6 Update Rojo project mapping to include new constants file under ReplicatedStorage
-- [ ] 1.7 Test constants accessibility from server scripts in Roblox Studio
-- [ ] 1.8 Verify constants load correctly and values are reasonable for gameplay testing
+- [x] 1.1 Create `src/shared/constants/EnemyConstants.luau` with enemy health, speed, and timing constants
+- [x] 1.2 Add enemy visual properties (size, color, material) for basic enemy representation
+- [x] 1.3 Define enemy states enum (SPAWNING, MOVING, REACHED_TARGET, DESTROYED) 
+- [x] 1.4 Configure spawn timing and enemy limits for Phase 1 (5-10 concurrent enemies)
+- [x] 1.5 Add distance threshold constant for goal detection and cleanup
+- [x] 1.6 Update Rojo project mapping to include new constants file under ReplicatedStorage
+- [x] 1.7 Test constants accessibility from server scripts in Roblox Studio
+- [x] 1.8 Verify constants load correctly and values are reasonable for gameplay testing
 
-### 2. Enemy Entity Module
+### 2. Enemy Entity Module ✅ COMPLETED
 
 **Objective**: Implement the core Enemy ModuleScript that handles individual enemy behavior, linear movement logic, and state management.
 
-- [ ] 2.1 Create `src/shared/enemies/Enemy.luau` ModuleScript with Enemy class structure
-- [ ] 2.2 Implement `Enemy.new()` constructor accepting spawn and target positions
-- [ ] 2.3 Add health management system (`TakeDamage`, `GetHealth`, death detection)
-- [ ] 2.4 Implement linear movement logic in `Update(deltaTime)` using direction vector and speed
-- [ ] 2.5 Add position and state tracking methods (`GetPosition`, `GetState`, `SetState`)
-- [ ] 2.6 Implement goal detection using distance threshold from EnemyConstants
-- [ ] 2.7 Add proper cleanup and destruction logic in `Destroy()` method
-- [ ] 2.8 Test Enemy module instantiation and basic movement calculation in Studio
+- [x] 2.1 Create `src/shared/enemies/Enemy.luau` ModuleScript with Enemy class structure
+- [x] 2.2 Implement `Enemy.new()` constructor accepting spawn and target positions
+- [x] 2.3 Add health management system (`TakeDamage`, `GetHealth`, death detection)
+- [x] 2.4 Implement linear movement logic in `Update(deltaTime)` using direction vector and speed
+- [x] 2.5 Add position and state tracking methods (`GetPosition`, `GetState`, `SetState`)
+- [x] 2.6 Implement goal detection using distance threshold from EnemyConstants
+- [x] 2.7 Add proper cleanup and destruction logic in `Destroy()` method
+- [x] 2.8 Test Enemy module instantiation and basic movement calculation in Studio
 
 ### 3. Enemy Roblox Part Management
 
