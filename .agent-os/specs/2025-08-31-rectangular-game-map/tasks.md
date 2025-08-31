@@ -18,14 +18,14 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
 - [x] 1.8. Verify all constant values match technical specification requirements
 
 ### 2. Implement MapService Core Module
-- [ ] 2.1. Create MapService.luau in src/server/services/ directory structure
-- [ ] 2.2. Implement Initialize() method to create base platform Part in Workspace.Map
-- [ ] 2.3. Set platform properties: Size(100,1,100), Position(0,0,0), Color gray, Material Plastic
-- [ ] 2.4. Create spawn marker: green Part(2,2,2) at spawn position, slightly elevated
-- [ ] 2.5. Create goal marker: red Part(2,2,2) at goal position, slightly elevated
-- [ ] 2.6. Implement GetSpawnPosition() and GetGoalPosition() accessor methods
-- [ ] 2.7. Add proper error handling and LogService integration for debugging
-- [ ] 2.8. Test MapService.Initialize() creates all 3 Parts correctly in Workspace
+- [x] 2.1. Create MapService.luau in src/server/services/ directory structure
+- [x] 2.2. Implement Initialize() method to create base platform Part in Workspace.Map
+- [x] 2.3. Set platform properties: Size(100,1,100), Position(0,0,0), Color gray, Material Plastic
+- [x] 2.4. Create spawn marker: green Part(2,2,2) at spawn position, slightly elevated
+- [x] 2.5. Create goal marker: red Part(2,2,2) at goal position, slightly elevated
+- [x] 2.6. Implement GetSpawnPosition() and GetGoalPosition() accessor methods
+- [x] 2.7. Add proper error handling and LogService integration for debugging
+- [x] 2.8. Test MapService.Initialize() creates all 3 Parts correctly in Workspace
 
 ### 3. Implement Tower Placement Validation
 - [ ] 3.1. Design basic coordinate validation tests for IsValidTowerPosition method
