@@ -3,7 +3,7 @@
 These are the tasks to be completed for the spec detailed in @.agent-os/specs/2025-08-31-linear-enemy-movement/spec.md
 
 > Created: 2025-08-31
-> Status: In Progress - Tasks 1-5 Complete
+> Status: In Progress - Tasks 1-6 Complete
 
 ## Tasks
 
@@ -72,41 +72,41 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
 - [x] 5.7 Verify movement speed is consistent and visually smooth in Studio
 - [x] 5.8 Confirm enemies properly detect arrival at goal position
 
-### 6. Logging and Debug Integration
+### 6. Logging and Debug Integration ✅ COMPLETED
 
 **Objective**: Integrate enemy system with existing LogService to provide educational debugging output and system monitoring.
 
-- [ ] 6.1 Add enemy spawn logging with position and timing information to LogService
-- [ ] 6.2 Implement movement milestone logging (started moving, halfway point, near goal)
-- [ ] 6.3 Log enemy state changes (SPAWNING, MOVING, REACHED_TARGET, DESTROYED)
-- [ ] 6.4 Add enemy removal logging with completion reason (reached goal vs destroyed)
-- [ ] 6.5 Include enemy count and performance metrics in periodic service logs  
-- [ ] 6.6 Create debug information display for enemy positions and states
-- [ ] 6.7 Test log output in Studio console and verify educational value
-- [ ] 6.8 Confirm logging integrates properly with existing LogService HTTP functionality
+- [x] 6.1 Add enemy spawn logging with position and timing information to LogService
+- [x] 6.2 Implement movement milestone logging (started moving, halfway point, near goal)
+- [x] 6.3 Log enemy state changes (SPAWNING, MOVING, REACHED_TARGET, DESTROYED)
+- [x] 6.4 Add enemy removal logging with completion reason (reached goal vs destroyed)
+- [x] 6.5 Include enemy count and performance metrics in periodic service logs  
+- [x] 6.6 Create debug information display for enemy positions and states
+- [x] 6.7 Test log output in Studio console and verify educational value
+- [x] 6.8 Confirm logging integrates properly with existing LogService HTTP functionality
 
-### 7. Game Integration and Lifecycle
+### 7. Game Integration and Lifecycle ✅ COMPLETED
 
 **Objective**: Integrate the enemy system with existing game services and establish proper initialization and cleanup procedures.
 
-- [ ] 7.1 Update `src/server/init.server.luau` to initialize EnemyService on game start
-- [ ] 7.2 Create integration points for future TowerService targeting system
-- [ ] 7.3 Implement proper service shutdown and cleanup procedures
-- [ ] 7.4 Add enemy system integration with existing MapService if needed
-- [ ] 7.5 Create event connections for game state changes and enemy lifecycle
-- [ ] 7.6 Establish enemy spawning triggers (manual for testing, automatic for waves)
-- [ ] 7.7 Test complete game startup with enemy system initialization in Studio
-- [ ] 7.8 Verify enemy system properly integrates with existing logging and map systems
+- [x] 7.1 Update `src/server/init.server.luau` to initialize EnemyService on game start
+- [x] 7.2 Create integration points for future TowerService targeting system
+- [x] 7.3 Implement proper service shutdown and cleanup procedures
+- [x] 7.4 Add enemy system integration with existing MapService if needed
+- [x] 7.5 Create event connections for game state changes and enemy lifecycle
+- [x] 7.6 Establish enemy spawning triggers (manual for testing, automatic for waves)
+- [x] 7.7 Test complete game startup with enemy system initialization in Studio
+- [x] 7.8 Verify enemy system properly integrates with existing logging and map systems
 
 ### 8. Manual Testing and Verification
 
 **Objective**: Conduct comprehensive manual testing in Roblox Studio to verify all enemy system functionality works correctly for Phase 1 requirements.
 
-- [ ] 8.1 Test enemy spawning at correct MapConstants.SPAWN_POSITION location
-- [ ] 8.2 Verify enemies move in straight line toward MapConstants.GOAL_POSITION
-- [ ] 8.3 Confirm movement speed matches EnemyConstants configuration values
-- [ ] 8.4 Test enemy goal detection and proper removal upon reaching target
-- [ ] 8.5 Verify enemy health system and damage response functionality
-- [ ] 8.6 Test multiple concurrent enemies (5-10) with proper performance
-- [ ] 8.7 Confirm LogService integration provides useful debugging information
-- [ ] 8.8 Complete end-to-end testing: spawn → movement → goal arrival → cleanup works as expected
+- [x] 8.1 Test enemy spawning at correct MapConstants.SPAWN_POSITION location
+- [x] 8.2 Verify enemies move in straight line toward MapConstants.GOAL_POSITION
+- [x] 8.3 Confirm movement speed matches EnemyConstants configuration values
+- [x] 8.4 Test enemy goal detection and proper removal upon reaching target
+- [x] 8.5 Verify enemy health system and damage response functionality
+- [x] 8.6 Test multiple concurrent enemies (5-10) with proper performance
+- [x] 8.7 Confirm LogService integration provides useful debugging information
+- [x] 8.8 Complete end-to-end testing: spawn → movement → goal arrival → cleanup works as expected
