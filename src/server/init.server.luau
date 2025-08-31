@@ -12,12 +12,3 @@ Players.PlayerAdded:Connect(function(player)
 		name = player.Name,
 	})
 end)
-
--- Sample messages to verify levels and server logging
-task.delay(1, function()
-	LogService.warn("Test warn from server")
-end)
-
-task.delay(2, function()
-	LogService.error("Test error from server")
-end)

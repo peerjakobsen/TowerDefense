@@ -8,14 +8,14 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
 ## Tasks
 
 ### 1. Create Map Constants Module
-- [ ] 1.1. Create MapConstants.luau in src/shared/constants/ directory
-- [ ] 1.2. Define MAP_WIDTH (100), MAP_HEIGHT (100), BASE_THICKNESS (1) constants
-- [ ] 1.3. Define SPAWN_POSITION Vector3.new(-45, 1, 0) and GOAL_POSITION Vector3.new(45, 1, 0)
-- [ ] 1.4. Define PATH_HALF_WIDTH constant (2 studs) for tower placement exclusion
-- [ ] 1.5. Define visual constants for colors and marker sizes
-- [ ] 1.6. Update default.project.json to map src/shared/constants to ReplicatedStorage/Shared/constants
-- [ ] 1.7. Test constants accessibility from both server and client scripts
-- [ ] 1.8. Verify all constant values match technical specification requirements
+- [x] 1.1. Create MapConstants.luau in src/shared/constants/ directory
+- [x] 1.2. Define MAP_WIDTH (100), MAP_HEIGHT (100), BASE_THICKNESS (1) constants
+- [x] 1.3. Define SPAWN_POSITION Vector3.new(-45, 1, 0) and GOAL_POSITION Vector3.new(45, 1, 0)
+- [x] 1.4. Define PATH_HALF_WIDTH constant (2 studs) for tower placement exclusion
+- [x] 1.5. Define visual constants for colors and marker sizes
+- [x] 1.6. Update default.project.json to map src/shared/constants to ReplicatedStorage/Shared/constants
+- [x] 1.7. Test constants accessibility from both server and client scripts
+- [x] 1.8. Verify all constant values match technical specification requirements
 
 ### 2. Implement MapService Core Module
 - [ ] 2.1. Create MapService.luau in src/server/services/ directory structure
