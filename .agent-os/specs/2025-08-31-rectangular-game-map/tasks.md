@@ -28,14 +28,14 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
 - [x] 2.8. Test MapService.Initialize() creates all 3 Parts correctly in Workspace
 
 ### 3. Implement Tower Placement Validation
-- [ ] 3.1. Design basic coordinate validation tests for IsValidTowerPosition method
-- [ ] 3.2. Implement IsValidTowerPosition(position: Vector3) boolean method
-- [ ] 3.3. Add map boundary checking (within 100x100 rectangle bounds)
-- [ ] 3.4. Calculate path corridor exclusion using spawn→goal line and PATH_HALF_WIDTH
-- [ ] 3.5. Implement perpendicular distance calculation from point to spawn-goal line
-- [ ] 3.6. Add validation to reject positions within ±2 studs of the straight path
-- [ ] 3.7. Add LogService messages for validation results during testing
-- [ ] 3.8. Test placement validation with positions inside/outside corridor and map bounds
+- [x] 3.1. Design basic coordinate validation tests for IsValidTowerPosition method
+- [x] 3.2. Implement IsValidTowerPosition(position: Vector3) boolean method
+- [x] 3.3. Add map boundary checking (within 100x100 rectangle bounds)
+- [x] 3.4. Calculate path corridor exclusion using spawn→goal line and PATH_HALF_WIDTH
+- [x] 3.5. Implement perpendicular distance calculation from point to spawn-goal line
+- [x] 3.6. Add validation to reject positions within ±2 studs of the straight path
+- [x] 3.7. Add LogService messages for validation results during testing
+- [x] 3.8. Test placement validation with positions inside/outside corridor and map bounds
 
 ### 4. Integrate with Existing Project Structure
 - [ ] 4.1. Test LogService integration from existing src/shared/LogService.luau

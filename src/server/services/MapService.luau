@@ -109,6 +109,51 @@ function MapService.IsInitialized(): boolean
 	return mapInitialized
 end
 
+-- Check if a position is valid for tower placement
+-- Position must be within map bounds and outside the path corridor
+function MapService.IsValidTowerPosition(position: Vector3): boolean
+	if not mapInitialized then
+		LogService.error("MapService.IsValidTowerPosition() called before initialization")
+		return false
+	end
+	
+	-- Check map boundary (100x100 rectangle bounds)
+	local halfWidth = MapConstants.MAP_WIDTH / 2
+	local halfHeight = MapConstants.MAP_HEIGHT / 2
+	
+	if math.abs(position.X) > halfWidth or math.abs(position.Z) > halfHeight then
+		LogService.debug("Tower placement rejected: position outside map bounds", {
+			position = position,
+			bounds = { x = halfWidth, z = halfHeight }
+		})
+		return false
+	end
+	
+	-- Calculate path corridor exclusion using spawn→goal line and PATH_HALF_WIDTH
+	local spawnPos = MapConstants.SPAWN_POSITION
+	local goalPos = MapConstants.GOAL_POSITION
+	
+	-- Calculate perpendicular distance from point to spawn-goal line
+	-- Line equation: spawn to goal is along X-axis (Z remains constant at 0)
+	-- Since spawn is at (-45, 1, 0) and goal is at (45, 1, 0), the path is a horizontal line at Z=0
+	local distanceFromPath = math.abs(position.Z - spawnPos.Z)
+	
+	if distanceFromPath <= MapConstants.PATH_HALF_WIDTH then
+		LogService.debug("Tower placement rejected: position within path corridor", {
+			position = position,
+			distanceFromPath = distanceFromPath,
+			pathHalfWidth = MapConstants.PATH_HALF_WIDTH
+		})
+		return false
+	end
+	
+	LogService.debug("Tower placement approved", {
+		position = position,
+		distanceFromPath = distanceFromPath
+	})
+	return true
+end
+
 -- Get references to the created map objects (for testing/debugging)
 function MapService.GetMapObjects()
 	if not mapInitialized then
