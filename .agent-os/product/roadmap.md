@@ -5,7 +5,7 @@
 **Success Criteria:** Player can place one tower that successfully shoots at and destroys moving enemies
 
 ### Features
-- [ ] Create rectangular map with spawn/goal points - Basic map layout with clearly defined start and end positions `S`
+- [x] Create rectangular map with spawn/goal points - Basic map layout with clearly defined start and end positions `S`
 - [ ] Implement linear enemy movement - Enemy moves in straight line from spawn to goal `S`
 - [ ] Build single tower type - Tower detects enemies in range and shoots projectiles `M`
 - [ ] Basic health/score UI - Simple interface showing player health and score `S`

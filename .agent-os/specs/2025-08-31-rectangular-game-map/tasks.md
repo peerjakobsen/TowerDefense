@@ -38,21 +38,21 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
 - [x] 3.8. Test placement validation with positions inside/outside corridor and map bounds
 
 ### 4. Integrate with Existing Project Structure
-- [ ] 4.1. Test LogService integration from existing src/shared/LogService.luau
-- [ ] 4.2. Update rojo configuration to include new server services directory
-- [ ] 4.3. Verify MapConstants accessible from both server and client contexts
-- [ ] 4.4. Create simple initialization script that calls MapService.Initialize()
-- [ ] 4.5. Test map creation in Roblox Studio using rojo serve workflow
-- [ ] 4.6. Verify Workspace.Map folder organization and Part hierarchy
-- [ ] 4.7. Document API methods for future WaveService and TowerService integration
-- [ ] 4.8. Confirm rectangular map fully functional with spawn, goal, and placement validation
+- [x] 4.1. Test LogService integration from existing src/shared/LogService.luau
+- [x] 4.2. Update rojo configuration to include new server services directory
+- [x] 4.3. Verify MapConstants accessible from both server and client contexts
+- [x] 4.4. Create simple initialization script that calls MapService.Initialize()
+- [x] 4.5. Test map creation in Roblox Studio using rojo serve workflow
+- [x] 4.6. Verify Workspace.Map folder organization and Part hierarchy
+- [x] 4.7. Document API methods for future WaveService and TowerService integration
+- [x] 4.8. Confirm rectangular map fully functional with spawn, goal, and placement validation
 
 ### 5. Visual Verification and Phase 1 Validation
-- [ ] 5.1. Create manual test script to validate map dimensions and positioning
-- [ ] 5.2. Verify spawn point clearly visible as bright green marker on left edge
-- [ ] 5.3. Verify goal point clearly visible as bright red marker on right edge
-- [ ] 5.4. Test tower placement validation across multiple map positions
-- [ ] 5.5. Confirm path corridor protection prevents tower placement near spawn→goal line
-- [ ] 5.6. Validate map provides foundation for Phase 1 linear enemy movement
-- [ ] 5.7. Test all MapService public API methods return expected values
-- [ ] 5.8. Confirm rectangular map ready for integration with enemy movement system
+- [x] 5.1. Create manual test script to validate map dimensions and positioning
+- [x] 5.2. Verify spawn point clearly visible as bright green marker on left edge
+- [x] 5.3. Verify goal point clearly visible as bright red marker on right edge
+- [x] 5.4. Test tower placement validation across multiple map positions
+- [x] 5.5. Confirm path corridor protection prevents tower placement near spawn→goal line
+- [x] 5.6. Validate map provides foundation for Phase 1 linear enemy movement
+- [x] 5.7. Test all MapService public API methods return expected values
+- [x] 5.8. Confirm rectangular map ready for integration with enemy movement system
