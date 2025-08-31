@@ -5,63 +5,67 @@
 -- linear movement logic, and state management for Phase 1
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
+local CollectionService = game:GetService("CollectionService")
+local RunService = game:GetService("RunService")
 
-local EnemyConstants = require(ReplicatedStorage.Constants.EnemyConstants)
-local LogService = require(ReplicatedStorage.LogService)
+local EnemyConstants = require(ReplicatedStorage.Shared.constants.EnemyConstants)
+local LogService = require(ReplicatedStorage.Shared.LogService)
 
 export type EnemyState = "Spawning" | "Moving" | "ReachedTarget" | "Destroyed"
-
-export type EnemyData = {
-  id: string,
-  spawnPosition: Vector3,
-  targetPosition: Vector3,
-  currentPosition: Vector3,
-  health: number,
-  maxHealth: number,
-  speed: number,
-  state: EnemyState,
-  direction: Vector3,
-  distanceToTarget: number,
-}
 
 local Enemy = {}
 Enemy.__index = Enemy
 
--- Constructor: Create a new enemy instance
-function Enemy.new(spawnPosition: Vector3, targetPosition: Vector3): EnemyData
-  local self = setmetatable({}, Enemy) :: any
+-- Workspace management
+local function getOrCreateEnemiesFolder(): Folder
+	local enemiesFolder = workspace:FindFirstChild("Enemies")
+	if not enemiesFolder then
+		enemiesFolder = Instance.new("Folder")
+		enemiesFolder.Name = "Enemies"
+		enemiesFolder.Parent = workspace
+		LogService.info("Created Enemies folder in workspace")
+	end
+	return enemiesFolder
+end
 
-  -- Generate unique ID for this enemy
-  self.id = HttpService:GenerateGUID(false)
-  
-  -- Position data
-  self.spawnPosition = spawnPosition
-  self.targetPosition = targetPosition
-  self.currentPosition = spawnPosition
-  
-  -- Health system
-  self.maxHealth = EnemyConstants.BASE_HEALTH
-  self.health = self.maxHealth
-  
-  -- Movement system
-  self.speed = EnemyConstants.BASE_SPEED
-  self.direction = (targetPosition - spawnPosition).Unit
-  self.distanceToTarget = (targetPosition - spawnPosition).Magnitude
-  
-  -- Initial state
-  self.state = EnemyConstants.STATES.SPAWNING
-  
-  LogService.info("Enemy spawned", {
-    id = self.id,
-    spawn = spawnPosition,
-    target = targetPosition,
-    health = self.health,
-    speed = self.speed,
-  })
-  
-  return self
+-- Constructor: Create a new enemy instance
+function Enemy.new(spawnPosition: Vector3, targetPosition: Vector3)
+	local self = setmetatable({}, Enemy)
+
+	-- Generate unique ID for this enemy
+	self.id = HttpService:GenerateGUID(false)
+	
+	-- Position data
+	self.spawnPosition = spawnPosition
+	self.targetPosition = targetPosition
+	self.currentPosition = spawnPosition
+	
+	-- Health system
+	self.maxHealth = EnemyConstants.BASE_HEALTH
+	self.health = self.maxHealth
+	
+	-- Movement system
+	self.speed = EnemyConstants.BASE_SPEED
+	self.direction = (targetPosition - spawnPosition).Unit
+	self.distanceToTarget = (targetPosition - spawnPosition).Magnitude
+	
+	-- Initial state
+	self.state = EnemyConstants.STATES.SPAWNING
+	
+	-- Create visual Part representation
+	self:_CreatePart()
+	
+	LogService.info("Enemy spawned with Part", {
+		id = self.id,
+		spawn = spawnPosition,
+		target = targetPosition,
+		health = self.health,
+		speed = self.speed,
+		partCreated = self.part ~= nil,
+	})
+	
+	return self
 end
 
 -- Health management methods
@@ -133,6 +137,9 @@ function Enemy:Update(deltaTime: number): boolean
     self.distanceToTarget = 0
     self:_SetState(EnemyConstants.STATES.REACHED_TARGET)
     
+    -- Synchronize Part position to exact target
+    self:_UpdatePartPosition()
+    
     LogService.info("Enemy reached target", {
       id = self.id,
       finalPosition = self.currentPosition,
@@ -143,6 +150,9 @@ function Enemy:Update(deltaTime: number): boolean
   
   -- Normal movement update
   self.currentPosition = newPosition
+  
+  -- Synchronize Part position with logical position
+  self:_UpdatePartPosition()
   
   return true -- Still alive and moving
 end
@@ -185,25 +195,80 @@ function Enemy:_SetState(newState: EnemyState)
   })
 end
 
+-- Part management methods
+function Enemy:_CreatePart()
+	local enemiesFolder = getOrCreateEnemiesFolder()
+	
+	-- Create the enemy Part with visual styling from EnemyConstants
+	local part = Instance.new("Part")
+	part.Name = "Enemy_" .. self.id
+	part.Size = EnemyConstants.ENEMY_SIZE
+	part.Color = EnemyConstants.ENEMY_COLOR
+	part.Material = EnemyConstants.ENEMY_MATERIAL
+	part.Transparency = EnemyConstants.ENEMY_TRANSPARENCY
+	part.Position = self.currentPosition
+	part.Shape = Enum.PartType.Block
+	part.Anchored = true -- Enemies don't use physics, we control movement
+	part.CanCollide = false -- Don't interfere with other game objects
+	part.Parent = enemiesFolder
+	
+	-- Store Part reference
+	self.part = part
+	
+	-- Add CollectionService tag for efficient querying
+	CollectionService:AddTag(part, "Enemy")
+	
+	LogService.info("Enemy Part created", {
+		id = self.id,
+		partName = part.Name,
+		position = part.Position,
+		size = part.Size,
+		color = part.Color,
+	})
+end
+
+function Enemy:_UpdatePartPosition()
+	if self.part and self.part.Parent then
+		self.part.Position = self.currentPosition
+	end
+end
+
+function Enemy:_DestroyPart()
+	if self.part and self.part.Parent then
+		-- Remove CollectionService tag
+		CollectionService:RemoveTag(self.part, "Enemy")
+		
+		LogService.info("Enemy Part destroyed", {
+			id = self.id,
+			partName = self.part.Name,
+			finalPosition = self.part.Position,
+		})
+		
+		-- Destroy the Part
+		self.part:Destroy()
+		self.part = nil
+	end
+end
+
 -- Cleanup and destruction logic
 function Enemy:Destroy()
-  if self.state == EnemyConstants.STATES.DESTROYED then
-    return -- Already destroyed
-  end
-  
-  LogService.info("Enemy destroyed", {
-    id = self.id,
-    finalPosition = self.currentPosition,
-    finalHealth = self.health,
-    finalState = self.state,
-  })
-  
-  -- Set to destroyed state
-  self.state = EnemyConstants.STATES.DESTROYED
-  self.health = 0
-  
-  -- Clean up any references (for future Part management)
-  -- This will be expanded in Task 3 when we add visual Parts
+	if self.state == EnemyConstants.STATES.DESTROYED then
+		return -- Already destroyed
+	end
+	
+	LogService.info("Enemy destroyed", {
+		id = self.id,
+		finalPosition = self.currentPosition,
+		finalHealth = self.health,
+		finalState = self.state,
+	})
+	
+	-- Clean up Part representation
+	self:_DestroyPart()
+	
+	-- Set to destroyed state
+	self.state = EnemyConstants.STATES.DESTROYED
+	self.health = 0
 end
 
 return Enemy
